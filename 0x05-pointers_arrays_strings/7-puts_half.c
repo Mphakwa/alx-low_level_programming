@@ -1,5 +1,3 @@
-7-puts_half.c
-
 #include "main.h"
 /**
  * puts_half - a function that prints half of a string

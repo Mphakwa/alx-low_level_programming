@@ -1,7 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 /**
  * read_textfile - Read and print a text file
@@ -13,42 +10,43 @@
 
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	FILE *file;
-	char *buffer;
-	ssize_t bytesRead, bytesWritten;
+	char *buf;
+	int fd;
+	ssize_t w;
+	ssize_t t;
 
 	if (filename == NULL)
 		return (0);
 
-	file = fopen(filename, "r");
-	if (file == NULL)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 		return (0);
 
-	buffer = (char *)malloc(letters + 1);
-	if (buffer == NULL)
+	buf = malloc(sizeof(char) * letters);
+	if (buf == NULL)
 	{
-		fclose(file);
+		close(fd);
 		return (0);
 	}
 
-	bytesRead = fread(buffer, sizeof(char), letters, file);
-
-	if (bytesRead <= 0)
+	t = read(fd, buf, letters);
+	if (t == -1)
 	{
-		fclose(file);
-		free(buffer);
+		free(buf);
+		close(fd);
 		return (0);
 	}
 
-	buffer[bytesRead] = '\0';
-
-	bytesWritten = write(STDOUT_FILENO, buffer, bytesRead);
-
-	fclose(file);
-	free(buffer);
-
-	if (bytesWritten != bytesRead)
+	w = write(STDOUT_FILENO, buf, t);
+	if (w == -1)
+	{
+		free(buf);
+		close(fd);
 		return (0);
+	}
 
-	return (bytesRead);
+	free(buf);
+	close(fd);
+
+	return (w);
 }

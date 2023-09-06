@@ -15,28 +15,23 @@
 
 int append_text_to_file(const char *filename, char *text_content)
 {
-	int fd;
-	ssize_t bytes_written;
+	int o, w, len = 0;
 
 	if (filename == NULL)
 		return (-1);
 
-	if (text_content == NULL)
-		return (1); /* Nothing to add, return success */
-
-	fd = open(filename, O_WRONLY | O_APPEND);
-
-	if (fd == -1)
-		return (-1); /* Unable to open or write the file */
-
-	bytes_written = write(fd, text_content, strlen(text_content));
-
-	if (bytes_written == -1)
+	if (text_content != NULL)
 	{
-		close(fd);
-		return (-1);
+		for (len = 0; text_content[len];)
+			len++;
 	}
 
-	close(fd);
+	o = open(filename, O_WRONLY | O_APPEND);
+	w = write(o, text_content, len);
+
+	if (o == -1 || w == -1)
+		return (-1);
+
+	close(o);
 	return (1);
 }

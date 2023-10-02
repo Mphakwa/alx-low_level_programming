@@ -4,7 +4,6 @@
  * print_usage_and_exit - Print usage message and exit with a specific code.
  * @program_name: The name of the program.
  */
-
 void print_usage_and_exit(const char *program_name)
 {
 	dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", program_name);
@@ -17,7 +16,6 @@ void print_usage_and_exit(const char *program_name)
  * @file_name: The name of the file.
  * @exit_code: The exit code.
  */
-
 void print_error_and_exit(const char *error_message, const char *file_name, int exit_code)
 {
 	dprintf(STDERR_FILENO, "Error: %s %s\n", error_message, file_name);
@@ -29,7 +27,6 @@ void print_error_and_exit(const char *error_message, const char *file_name, int 
  * @from_file: The source file name.
  * @to_file: The destination file name.
  */
-
 void copy_file(const char *from_file, const char *to_file)
 {
 	int from_fd, to_fd;
@@ -85,7 +82,6 @@ void copy_file(const char *from_file, const char *to_file)
  * @argv: An array of pointers to the arguments.
  * Return: 0 on success, or an appropriate error code on failure.
  */
-
 int main(int argc, char *argv[])
 {
 	if (argc != 3)

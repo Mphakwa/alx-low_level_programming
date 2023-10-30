@@ -1,5 +1,7 @@
 #include "main.h"
 
+#define BUFFER_SIZE 1024
+
 /**
  * print_usage_and_exit - Print usage message and exit with a specific code.
  * @program_name: The name of the program.
